@@ -158,33 +158,48 @@ div#loading {
 <body>
 
 <div class="form-style-10">
-<h1>Sign Up Now!<span>Reserve time at {{ place }}</span></h1>
-<form action="{{ url_for('handle_data') }}" method="post">
+<h1>Sign Up Now!<span>Sign up and tell us what you think of the site!</span></h1>
+<form>
     <div class="section"><span>{{ step_no }}</span>Contact Details</div>
     <div class="inner-wrap">
-      <div style="display: none;">
-        <select id="times" name="field0">
-            <option value="{{ place }}">{{ place }}</option>
-        </select>
-      </div>
         <label>Full Name <input type="text" name="field1" /></label>
         <label>Email <input name="field2" type="email"></input></label>
         <label>Phone Number <input type="text" name="field4" /></label>
-        <label for="times">Choose a time:</label>
-        <select id="times" name="timeSelect">
-            <option value="default">Select a time</option>
-            {% if times %}
-            {% for time in times %}
-                <option value=" {{ time }} ">{{ time }}</option>
-            {% endfor %}
-            {% else %}
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-            {% endif %}
-        </select>
     </div>
+    <div class="section"><span>2</span>Place</div>
+        <div class="inner-wrap">
+            <label for="places">Choose a place:</label>
+            <select id="places" onchange="handlePlaceClick(this.selectedIndex)">
+              <option value="default">Select a place</option>
+              {% if places %}
+                {% for place in places %}
+                    <option value=" {{ place }} ">{{ place }}</option>
+                {% endfor %}
+              {% else %}
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              {% endif %}
+            </select>
+        </div>
+    <div class="section"><span>3</span>Reservation</div>
+        <div class="inner-wrap">
+            <label for="times">Choose a time:</label>
+            <select id="times" onchange="handleTimeClick(this.selectedIndex)">
+              <option value="default">Select a time</option>
+              {% if times %}
+                {% for time in times %}
+                    <option value=" {{ time }} ">{{ time }}</option>
+                {% endfor %}
+              {% else %}
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              {% endif %}
+            </select>
+        </div>
     <div class="button-section">
      <input type="submit" name="Sign Up" />
      <span class="privacy-policy">
