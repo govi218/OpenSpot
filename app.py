@@ -115,4 +115,5 @@ if __name__ == '__main__':
         app_debug_state = True
     else:
         app_debug_state = False
-    app.run(debug=app_debug_state, host='0.0.0.0')
+    port = os.environ.get('PORT', 3000)
+    app.run(debug=app_debug_state, host='0.0.0.0', port=port)
