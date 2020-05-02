@@ -1,5 +1,6 @@
 import os
 import firebase_admin
+import datetime
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask, render_template, request
@@ -55,14 +56,56 @@ def handle_data():
     else:
         return "That time slot has already been filled!"
 
-    # doc = place_ref.get()
-    # print(u'Document data: {}'.format(doc.to_dict()))
-    # schedule.append(doc.to_dict())
-    # your code
-    # return a response
-    return "200 OK"
+    return "Your response has been submitted!"
+
+
+@app.route('/handle_onboard', methods=['post'])
+def handle_onboard():
+    print("Form data: ", request.form)
+    start_time_str =request.form['openTime']
+    start_time = datetime.datetime.strptime(start_time_str, '%H:%M')
+
+    end_time_str = request.form['closeTime']
+    end_time = datetime.datetime.strptime(end_time_str, '%H:%M')
+
+    time_per_person = request.form["time_per_person"]
+    num_employees = request.form["num_employees"]
+    business_name = request.form["businessName"]
+
+    times = []
+    curr_time = start_time
+    while curr_time < end_time:
+        print(curr_time.strftime('%H:%M'))
+        curr_time = curr_time + datetime.timedelta(minutes=int(time_per_person))
+        times.append(curr_time.strftime('%H:%M'))
+
+
+    employees = []
+    for i in range(int(num_employees)):
+        employee = {
+            'name': "staff"+str(i),
+            'email': request.form["field2"],
+            'number': request.form["number"]
+        }
+        employees.append(employee)
+
+    print(employees)
+
+
+    for time in times:
+        doc_ref = db.collection(business_name).document(time)
+        doc_ref.set({str(i+1): employees[i] for i in range(int(num_employees))})
+    return "Your response has been submitted!"
 
 # TODO: Create a GET endpoint to serve an onboarding form for a new business
+@app.route("/onboard", methods=['get'])
+def onboard():
+    places = []
+    for coll in db.collections():
+        print(coll.id)
+        places.append(coll.id)
+    print(places)
+    return render_template("./onboard.html", places=places)
 
 # TODO: Create a POST endpoint for a business to add itself to DB
 

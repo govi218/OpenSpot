@@ -158,33 +158,44 @@ div#loading {
 <body>
 
 <div class="form-style-10">
-<h1>Sign Up Now!<span>Reserve time at {{ place }}</span></h1>
-<form action="{{ url_for('handle_data') }}" method="post">
-    <div class="section"><span>{{ step_no }}</span>Contact Details</div>
+<h1>Sign Up Now!<span>Sign up and tell us what you think of the site!</span></h1>
+<form action="{{ url_for('handle_onboard') }}" method="post">
+    <div class="section"><!--<span>{{ step_no }}</span>-->Contact Details</div>
     <div class="inner-wrap">
-      <div style="display: none;">
-        <select id="times" name="field0">
-            <option value="{{ place }}">{{ place }}</option>
-        </select>
-      </div>
-        <label>Full Name <input type="text" name="field1" /></label>
+        <label>Name of Business <input type="text" name="businessName" /></label>
         <label>Email <input name="field2" type="email"></input></label>
-        <label>Phone Number <input type="text" name="field4" /></label>
-        <label for="times">Choose a time:</label>
-        <select id="times" name="timeSelect">
-            <option value="default">Select a time</option>
-            {% if times %}
-            {% for time in times %}
-                <option value=" {{ time }} ">{{ time }}</option>
-            {% endfor %}
-            {% endif %}
-        </select>
+        <label>Phone Number <input type="text" name="number" /></label>
+        <label>Amount of Time Per Person (in minutes)<input type="number" name="time_per_person" /></label>
+        <label>Number of Employees Working <input type="number" name="num_employees" /></label>
+        <label>Opening Time <input type="time" name="openTime"/></label>
+        <label>Closing Time <input type="time" name="closeTime"/></label>
+    <!-- <label for="times">Choose an opening time:</label> -->
+    <!-- <select id="times" name="openTime"> -->
+        <!-- <option value="default">Select a time</option> -->
+        <!-- {% if times %} -->
+        <!-- {% for time in times %} -->
+            <!-- <option value=" {{ time }} ">{{ time }}</option> -->
+        <!-- {% endfor %} -->
+        <!-- {% else %} -->
+        <!-- {% endif %} -->
+    <!-- </select> -->
+    <!-- <label for="times">Choose a closing time:</label> -->
+    <!-- <select id="times" name="closeTime"> -->
+        <!-- <option value="default">Select a time</option> -->
+        <!-- {% if times %} -->
+        <!-- {% for time in times %} -->
+            <!-- <option value=" {{ time }} ">{{ time }}</option> -->
+        <!-- {% endfor %} -->
+        <!-- {% else %} -->
+        <!-- {% endif %} -->
+    <!-- </select> -->
+
     </div>
     <div class="button-section">
-    <input type="submit" name="Sign Up" />
-    <span class="privacy-policy">
-    <input type="checkbox" name="field7">You agree to our Terms and Policy.
-    </span>
+     <input type="submit" name="Sign Up" />
+     <span class="privacy-policy">
+     <input type="checkbox" name="field7">You agree to our Terms and Policy.
+     </span>
     </div>
 </form>
 </div>
