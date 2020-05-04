@@ -158,38 +158,18 @@ div#loading {
 <body>
 
 <div class="form-style-10">
-<h1>Sign Up Now!<span>Sign up and tell us what you think of the site!</span></h1>
+<h1>Get OpenSpot for your business!<span>Fill in the information below to onboard your business.</span></h1>
 <form action="{{ url_for('handle_onboard') }}" method="post">
-    <div class="section"><!--<span>{{ step_no }}</span>-->Contact Details</div>
+    <!-- <div class="section"><\!--<span>{{ step_no }}</span>-\->Contact Details</div> -->
     <div class="inner-wrap">
         <label>Name of Business <input type="text" name="businessName" /></label>
-        <label>Email <input name="field2" type="email"></input></label>
+        <label>Pasword <input type="password" name="password" /></label>
+        <label>Email <input name="email" type="email"></input></label>
         <label>Phone Number <input type="text" name="number" /></label>
         <label>Amount of Time Per Person (in minutes)<input type="number" name="time_per_person" /></label>
         <label>Number of Employees Working <input type="number" name="num_employees" /></label>
         <label>Opening Time <input type="time" name="openTime"/></label>
         <label>Closing Time <input type="time" name="closeTime"/></label>
-    <!-- <label for="times">Choose an opening time:</label> -->
-    <!-- <select id="times" name="openTime"> -->
-        <!-- <option value="default">Select a time</option> -->
-        <!-- {% if times %} -->
-        <!-- {% for time in times %} -->
-            <!-- <option value=" {{ time }} ">{{ time }}</option> -->
-        <!-- {% endfor %} -->
-        <!-- {% else %} -->
-        <!-- {% endif %} -->
-    <!-- </select> -->
-    <!-- <label for="times">Choose a closing time:</label> -->
-    <!-- <select id="times" name="closeTime"> -->
-        <!-- <option value="default">Select a time</option> -->
-        <!-- {% if times %} -->
-        <!-- {% for time in times %} -->
-            <!-- <option value=" {{ time }} ">{{ time }}</option> -->
-        <!-- {% endfor %} -->
-        <!-- {% else %} -->
-        <!-- {% endif %} -->
-    <!-- </select> -->
-
     </div>
     <div class="button-section">
      <input type="submit" name="Sign Up" />

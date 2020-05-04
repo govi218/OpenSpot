@@ -1,6 +1,7 @@
 import os
 import firebase_admin
 import datetime
+import hashlib
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask, render_template, request
@@ -43,8 +44,6 @@ def handle_data():
 
     place_ref = db.collection(request.form["field0"]).document(time)
 
-    print('??')
-
     doc = place_ref.get()
     print('??')
     if len(doc.to_dict()) < 10:
@@ -61,7 +60,6 @@ def handle_data():
 
 @app.route('/handle_onboard', methods=['post'])
 def handle_onboard():
-    print("Form data: ", request.form)
     start_time_str =request.form['openTime']
     start_time = datetime.datetime.strptime(start_time_str, '%H:%M')
 
@@ -71,30 +69,38 @@ def handle_onboard():
     time_per_person = request.form["time_per_person"]
     num_employees = request.form["num_employees"]
     business_name = request.form["businessName"]
+    password = request.form["password"]
+    print(password)
+
+    pass_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    print(pass_hash)
 
     times = []
     curr_time = start_time
     while curr_time < end_time:
-        print(curr_time.strftime('%H:%M'))
-        curr_time = curr_time + datetime.timedelta(minutes=int(time_per_person))
         times.append(curr_time.strftime('%H:%M'))
+        curr_time = curr_time + datetime.timedelta(minutes=int(time_per_person))
 
 
     employees = []
     for i in range(int(num_employees)):
         employee = {
             'name': "staff"+str(i),
-            'email': request.form["field2"],
+            'email': request.form["email"],
             'number': request.form["number"]
         }
         employees.append(employee)
 
     print(employees)
-
-
     for time in times:
         doc_ref = db.collection(business_name).document(time)
         doc_ref.set({str(i+1): employees[i] for i in range(int(num_employees))})
+
+    info_ref = db.collection(business_name).document("info")
+    info_ref.set({
+        "password_hash": pass_hash
+    })
+
     return "Your response has been submitted!"
 
 # TODO: Create a GET endpoint to serve an onboarding form for a new business
@@ -108,15 +114,6 @@ def onboard():
     return render_template("./onboard.html", places=places)
 
 # TODO: Create a POST endpoint for a business to add itself to DB
-
-@app.route("/test", methods=['get'])
-def test():
-    places = []
-    for coll in db.collections():
-        print(coll.id)
-        places.append(coll.id)
-    print(places)
-    return render_template("./form.html", places=places)
 
 @app.route("/handlePlace", methods=['get', 'post'])
 def handlePlace():

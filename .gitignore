@@ -5,3 +5,4 @@ __pycache__
 credentials.json
 env/
 .python-version
+email_creds.txt
