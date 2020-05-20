@@ -14,17 +14,21 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
+### GET Requests
+
 # TODO: Create a POST endpoint that displays a form after taking a business name in query string
 @app.route("/form", methods=['get'])
 def form():
     place = request.args.get("place")
-    place_ref = db.collection(place).stream()
+    place_ref = db.collection("businesses").document(place).collection("data").stream()
 
     times = []
     schedule = []
 
     # potential race condition in here
     for doc in place_ref:
+        if doc.id == "info":
+            continue
         # print("Time: " + doc.id + ", num ppl: " + str(len(doc.to_dict())))
         schedule.append({'time': doc.id, 'people': doc.to_dict()})
         time_id = doc.id
@@ -34,20 +38,35 @@ def form():
 
     return render_template("./form.html",step_no="1", place=place, times=times)
 
+# GET endpoint to serve an onboarding form for a new business
+@app.route("/onboard", methods=['get'])
+def onboard():
+    places = []
+    for coll in db.collections():
+        print(coll.id)
+        places.append(coll.id)
+    print(places)
+    return render_template("./onboard.html", places=places)
+
+
+@app.route("/admin", methods=['get'])
+def admin():
+    return render_template("./login.html")
+
+
+### POST Requests
+
 @app.route('/handle_data', methods=['post'])
 def handle_data():
-    print("Form data: ", request.form)
-    print("Form data: ", request.form['timeSelect'])
     time = request.form['timeSelect'].strip()
 
-    print(request.form['field0'])
+    place_ref = db.collection("businesses").document(request.form["field0"]).collection("data").document(time)
+    info_ref = db.collection("businesses").document(request.form["field0"]).collection("data").document("info")
 
-    place_ref = db.collection(request.form["field0"]).document(time)
-
+    info = info_ref.get().to_dict()
     doc = place_ref.get()
-    print('??')
-    if len(doc.to_dict()) < 10:
-            db.collection(request.form['field0']).document(time).update({str(len(doc.to_dict())+1): {
+    if len(doc.to_dict()) < int(info["max_people"]):
+            place_ref.update({str(len(doc.to_dict())+1): {
                 'name': request.form['field1'],
                 'email': request.form["field2"],
                 'phone': request.form["field4"]
@@ -58,6 +77,7 @@ def handle_data():
     return "Your response has been submitted!"
 
 
+# POST endpoint for a business to add itself to DB
 @app.route('/handle_onboard', methods=['post'])
 def handle_onboard():
     start_time_str =request.form['openTime']
@@ -67,13 +87,12 @@ def handle_onboard():
     end_time = datetime.datetime.strptime(end_time_str, '%H:%M')
 
     time_per_person = request.form["time_per_person"]
+    max_people = request.form["max_people"]
     num_employees = request.form["num_employees"]
     business_name = request.form["businessName"]
-    password = request.form["password"]
-    print(password)
 
+    password = request.form["password"]
     pass_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    print(pass_hash)
 
     times = []
     curr_time = start_time
@@ -93,62 +112,43 @@ def handle_onboard():
 
     print(employees)
     for time in times:
-        doc_ref = db.collection(business_name).document(time)
+        doc_ref = db.collection("businesses").document(business_name).collection("data").document(time)
         doc_ref.set({str(i+1): employees[i] for i in range(int(num_employees))})
 
-    info_ref = db.collection(business_name).document("info")
+    info_ref = db.collection("businesses").document(business_name).collection("data").document("info")
     info_ref.set({
-        "password_hash": pass_hash
+        "password_hash": pass_hash,
+        "email": request.form["email"],
+        "business_name": business_name,
+        "max_people": max_people
     })
 
     return "Your response has been submitted!"
 
-# TODO: Create a GET endpoint to serve an onboarding form for a new business
-@app.route("/onboard", methods=['get'])
-def onboard():
-    places = []
-    for coll in db.collections():
-        print(coll.id)
-        places.append(coll.id)
-    print(places)
-    return render_template("./onboard.html", places=places)
+@app.route("/handle_admin_creds", methods=['get', 'post'])
+def handle_admin_creds():
+    email = request.form["email"]
+    password = request.form["password"]
+    pass_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-# TODO: Create a POST endpoint for a business to add itself to DB
+    if email == "" or password == "":
+        return "400"
 
-@app.route("/handlePlace", methods=['get', 'post'])
-def handlePlace():
-    print(request.args.get("place"))
-    place = request.args.get("place")
-    place_ref = db.collection(place).stream()
 
-    # TODO: display availability for all times
-    # Then, make a dropdown selector for the times that are available
+    # subcollection query goes here
+    coll = db.collection_group("data").where("email","==",email).stream()
 
-    # schedule = []
-    times = []
-    for doc in place_ref:
-        times.append(doc.id)
+    for d in coll:
+        doc_dict = d.to_dict()
+        if doc_dict["password_hash"] != pass_hash:
+            return "403"
 
-    return render_template("./form.html", places=[place], times=times)
+        place_ref = db.collection("businesses").document(d.to_dict()["business_name"]).collection("data").stream()
+        for y in place_ref:
+            print(y.id)
+            print(y.to_dict())
+    return render_template("./reservations.html")
 
-@app.route("/handleTime", methods=['get', 'post'])
-def handleTime():
-    print(request.args.get("place"))
-    place = request.args.get("place")
-    place_ref = db.collection(u'place').document(u'08:35')
-
-    schedule = []
-
-    try:
-        doc = place_ref.get()
-        print(u'Document data: {}'.format(doc.to_dict()))
-    except:
-        print(u'No such document!')
-
-    for doc in place_ref:
-        schedule.append({'time': doc.id, 'people': doc.to_dict()})
-
-    return render_template("./form.html", places=[place])
 
 if __name__ == '__main__':
     if os.environ.get('APP_DEBUG') is True:

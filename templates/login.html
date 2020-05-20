@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -156,90 +157,21 @@ div#loading {
 </head>
 
 <body>
-
-<div class="form-style-10">
-<h1>Sign Up Now!<span>Sign up and tell us what you think of the site!</span></h1>
-<form>
-    <div class="section"><span>{{ step_no }}</span>Contact Details</div>
-    <div class="inner-wrap">
-        <label>Full Name <input type="text" name="field1" /></label>
-        <label>Email <input name="field2" type="email"></input></label>
-        <label>Phone Number <input type="text" name="field4" /></label>
-    </div>
-    <div class="section"><span>2</span>Place</div>
+    <div class="form-style-10">
+    <h1>Open Spot Admin<span>Enter your credentials to view your business' queue.</span></h1>
+    <form action="{{ url_for('handle_admin_creds') }}" method="post">
+        <!-- <div class="section"><\!--<span>{{ step_no }}</span>-\->Contact Details</div> -->
         <div class="inner-wrap">
-            <label for="places">Choose a place:</label>
-            <select id="places" onchange="handlePlaceClick(this.selectedIndex)">
-              <option value="default">Select a place</option>
-              {% if places %}
-                {% for place in places %}
-                    <option value=" {{ place }} ">{{ place }}</option>
-                {% endfor %}
-              {% else %}
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              {% endif %}
-            </select>
+            <label>Email <input name="email" type="email"></input></label>
+            <label>Pasword <input type="password" name="password" /></label>
         </div>
-    <div class="section"><span>3</span>Reservation</div>
-        <div class="inner-wrap">
-            <label for="times">Choose a time:</label>
-            <select id="times" onchange="handleTimeClick(this.selectedIndex)">
-              <option value="default">Select a time</option>
-              {% if times %}
-                {% for time in times %}
-                    <option value=" {{ time }} ">{{ time }}</option>
-                {% endfor %}
-              {% else %}
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              {% endif %}
-            </select>
+        <div class="button-section">
+        <input type="submit" name="Submit" />
+        <span class="privacy-policy">
+        <!-- <input type="checkbox" name="field7">You agree to our Terms and Policy. -->
+        </span>
         </div>
-    <div class="button-section">
-     <input type="submit" name="Sign Up" />
-     <span class="privacy-policy">
-     <input type="checkbox" name="field7">You agree to our Terms and Policy.
-     </span>
+    </form>
     </div>
-</form>
-</div>
-<script>
-
-  function handlePlaceClick(idx) {
-      drop_menu = document.getElementById("places")
-              // select element
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a place') {
-                return
-              }
-              window.location.href = '/handlePlace?place=' + place
-              break;
-          }
-      }
-  }
-
-  function handleTimeClick(idx) {
-    let drop_menu = document.getElementById("places")
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              console.log(drop_menu.options[i].innerHTML)
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a time') {
-                  return
-              }
-              window.location.href = '/handleTime?place=' + data.place
-              break;
-          }
-      }
-  }
-
-</script>
 </body>
 </html>
