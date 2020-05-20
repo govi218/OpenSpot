@@ -1,10 +1,13 @@
 import os
 import firebase_admin
-import datetime
+import datetime as dt
 import hashlib
+import time as tm
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask, render_template, request
+from _datetime import date
+from _datetime import datetime
 
 app = Flask(__name__)
 
@@ -20,19 +23,39 @@ db = firestore.client()
 @app.route("/form", methods=['get'])
 def form():
     place = request.args.get("place")
-    place_ref = db.collection("businesses").document(place).collection("data").stream()
+    info_ref = db.collection("businesses").document(place).collection("data").document("info")
+
+    info = info_ref.get().to_dict()
+    start_time_str = info["start_time"]
+
+    start_time = datetime.strptime(start_time_str, '%H:%M')
+
+    end_time_str = info["end_time"]
+    end_time = datetime.strptime(end_time_str, '%H:%M')
+
+    num_employees = info["num_employees"]
+    time_per_person = info["time_per_person"]
 
     times = []
     schedule = []
 
+    curr_time = start_time
+
+    while curr_time < end_time:
+        times.append(curr_time.strftime('%H:%M'))
+        curr_time = curr_time + dt.timedelta(minutes=int(time_per_person))
+
+    today = datetime.now().strftime("%m-%d-%Y, %H:%M:%S")
+
+    place_ref = db.collection("businesses").document(place).collection("data").document("dates").collection(today).stream()
+
     # potential race condition in here
-    for doc in place_ref:
-        if doc.id == "info":
+    for entry in place_ref:
+        if entry.id == "info":
             continue
-        # print("Time: " + doc.id + ", num ppl: " + str(len(doc.to_dict())))
-        schedule.append({'time': doc.id, 'people': doc.to_dict()})
-        time_id = doc.id
-        time_dict = doc.to_dict()
+        schedule.append({'time': entry.id, 'people': entry.to_dict()})
+        time_id = entry.id
+        time_dict = entry.to_dict()
         if len(time_dict) < 10:
                 times.append(time_id)
 
@@ -59,20 +82,41 @@ def admin():
 @app.route('/handle_data', methods=['post'])
 def handle_data():
     time = request.form['timeSelect'].strip()
+    today = datetime.now().strftime("%m-%d-%Y")
 
-    place_ref = db.collection("businesses").document(request.form["field0"]).collection("data").document(time)
-    info_ref = db.collection("businesses").document(request.form["field0"]).collection("data").document("info")
+    place_ref = db.collection("businesses").document(request.form["times"]).collection("data").document("dates").collection(today).document(time)
+    info_ref = db.collection("businesses").document(request.form["times"]).collection("data").document("info")
 
-    info = info_ref.get().to_dict()
+    info = info_ref.get()
     doc = place_ref.get()
-    if len(doc.to_dict()) < int(info["max_people"]):
-            place_ref.update({str(len(doc.to_dict())+1): {
-                'name': request.form['field1'],
-                'email': request.form["field2"],
-                'phone': request.form["field4"]
-            }})
+
+    max_people = 0
+    num_employees = 0
+    len_queue = 0
+
+    if info.exists:
+        print(info.to_dict)
+        max_people = int(info.to_dict()['max_people'])
+        num_employees = int(info.to_dict()['num_employees'])
     else:
-        return "That time slot has already been filled!"
+        return "No such place"
+
+    if doc.exists:
+        print(len(doc.to_dict()))
+        len_queue = len(doc.to_dict())
+        if len_queue+num_employees == max_people:
+            return "This slot is full"
+        place_ref.update({str(len_queue+1): {
+            'name': request.form['name'],
+            'email': request.form["email"],
+            'phone': request.form["phone"]
+        }})
+    else:
+        place_ref.set({str(len_queue+1): {
+            'name': request.form['name'],
+            'email': request.form["email"],
+            'phone': request.form["phone"]
+        }})
 
     return "Your response has been submitted!"
 
@@ -80,11 +124,11 @@ def handle_data():
 # POST endpoint for a business to add itself to DB
 @app.route('/handle_onboard', methods=['post'])
 def handle_onboard():
-    start_time_str =request.form['openTime']
-    start_time = datetime.datetime.strptime(start_time_str, '%H:%M')
+    start_time_str = request.form['openTime']
+    start_time = datetime.strptime(start_time_str, '%H:%M').strftime('%H:%M')
 
     end_time_str = request.form['closeTime']
-    end_time = datetime.datetime.strptime(end_time_str, '%H:%M')
+    end_time = datetime.strptime(end_time_str, '%H:%M').strftime('%H:%M')
 
     time_per_person = request.form["time_per_person"]
     max_people = request.form["max_people"]
@@ -94,33 +138,17 @@ def handle_onboard():
     password = request.form["password"]
     pass_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-    times = []
-    curr_time = start_time
-    while curr_time < end_time:
-        times.append(curr_time.strftime('%H:%M'))
-        curr_time = curr_time + datetime.timedelta(minutes=int(time_per_person))
-
-
-    employees = []
-    for i in range(int(num_employees)):
-        employee = {
-            'name': "staff"+str(i),
-            'email': request.form["email"],
-            'number': request.form["number"]
-        }
-        employees.append(employee)
-
-    print(employees)
-    for time in times:
-        doc_ref = db.collection("businesses").document(business_name).collection("data").document(time)
-        doc_ref.set({str(i+1): employees[i] for i in range(int(num_employees))})
-
     info_ref = db.collection("businesses").document(business_name).collection("data").document("info")
     info_ref.set({
         "password_hash": pass_hash,
         "email": request.form["email"],
         "business_name": business_name,
-        "max_people": max_people
+        "num_employees": num_employees,
+        "max_people": max_people,
+        "submit_time": int(tm.time()),
+        "start_time": start_time,
+        "end_time": end_time,
+        "time_per_person": int(time_per_person)
     })
 
     return "Your response has been submitted!"
