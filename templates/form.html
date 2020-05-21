@@ -159,8 +159,8 @@ div#loading {
 
 <div class="form-style-10">
 <h1>Reserve time at {{ place }}<span>Sign Up Now!</span></h1>
-<form action="{{ url_for('handle_data') }}" method="post">
-    <div class="section"><span>{{ step_no }}</span>Contact Details</div>
+<form name="onboard-form" onsubmit="return validateForm()" action="{{ url_for('handle_data') }}" method="post">
+    <div class="section">Contact Details</div>
     <div class="inner-wrap">
       <div style="display: none;">
         <select id="times" name="times">
@@ -191,36 +191,34 @@ div#loading {
 </div>
 <script>
 
-  function handlePlaceClick(idx) {
-      drop_menu = document.getElementById("places")
-              // select element
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a place') {
-                return
-              }
-              window.location.href = '/handlePlace?place=' + place
-              break;
-          }
-      }
-  }
-
-  function handleTimeClick(idx) {
-    let drop_menu = document.getElementById("places")
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              console.log(drop_menu.options[i].innerHTML)
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a time') {
-                  return
-              }
-              window.location.href = '/handleTime?place=' + data.place
-              break;
-          }
-      }
-  }
-
-</script>
+<script>
+    function validateForm() {
+        var email = document.forms["onboard-form"]["email"].value;
+        if (email === "") {
+            alert("Email must be filled out");
+            return false;
+        }
+        var phone = document.forms["onboard-form"]["phone"].value;
+        if (phone === "") {
+            alert("Phone must be filled out");
+            return false;
+        }
+        var time = document.forms["onboard-form"]["timeSelect"].value;
+        if (time === "") {
+            alert("Time Per Person must be filled out");
+            return false;
+        }
+        var date = document.forms["onboard-form"]["date"].value;
+        if (date === "") {
+            alert("Date must be filled out");
+            return false;
+        }
+        var name = document.forms["onboard-form"]["name"].value;
+        if (Name === "") {
+            alert("Name must be filled out");
+            return false;
+        }
+    }
+</script></script>
 </body>
 </html>
