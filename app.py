@@ -83,9 +83,10 @@ def admin():
 def handle_data():
     time = request.form['timeSelect'].strip()
     today = datetime.now().strftime("%m-%d-%Y")
+    date = datetime.strptime(request.form['date'], '%Y-%m-%d').strftime('%m-%d-%Y')
 
-    place_ref = db.collection("businesses").document(request.form["times"]).collection("data").document("dates").collection(today).document(time)
     info_ref = db.collection("businesses").document(request.form["times"]).collection("data").document("info")
+    place_ref = db.collection("businesses").document(request.form["times"]).collection("data").document("dates").collection(date).document(time)
 
     info = info_ref.get()
     doc = place_ref.get()
@@ -165,17 +166,38 @@ def handle_admin_creds():
 
     # subcollection query goes here
     coll = db.collection_group("data").where("email","==",email).stream()
+    data = []
 
     for d in coll:
         doc_dict = d.to_dict()
         if doc_dict["password_hash"] != pass_hash:
             return "403"
 
-        place_ref = db.collection("businesses").document(d.to_dict()["business_name"]).collection("data").stream()
+        info_ref = db.collection("businesses").document(d.to_dict()["business_name"]).collection("data").document("info")
+        place_ref = db.collection("businesses").document(d.to_dict()["business_name"]).collection("data").document("dates").collections()
+        # places = place_ref.get()
+        info = info_ref.get()
+
+        # print(places.to_dict())
+        # print(info.to_dict())
+
         for y in place_ref:
-            print(y.id)
-            print(y.to_dict())
-    return render_template("./reservations.html")
+            coll = y.stream()
+            colls = []
+            for d in coll:
+                apt_dict = d.to_dict()
+                colls.append({
+                    "time": d.id,
+                    "appointments":[apt_dict[a] for a in apt_dict]
+                })
+                # print(d.id, ": ", d.to_dict())
+            # print('====')
+            data.append({
+                'id': y.id,
+                'dates': colls
+            })
+        print(data)
+    return render_template("./reservations.html", data=data)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,265 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Up To Ten</title>
+<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body{
+	background:#AEE4FF;
+}
+.form-style-10{
+	max-width:450px;
+	padding:30px;
+	margin:40px auto;
+	background: #FFF;
+	border-radius: 10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+	-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+}
+.form-style-10 .inner-wrap{
+	padding: 30px;
+	background: #F8F8F8;
+	border-radius: 6px;
+	margin-bottom: 15px;
+}
+.form-style-10 h1{
+	background: #2A88AD;
+	padding: 20px 30px 15px 30px;
+	margin: -30px -30px 30px -30px;
+	border-radius: 10px 10px 0 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+	color: #fff;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+	font: normal 30px 'Bitter', serif;
+	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+	border: 1px solid #257C9E;
+}
+.form-style-10 h1 > span{
+	display: block;
+	margin-top: 2px;
+	font: 13px Arial, Helvetica, sans-serif;
+}
+.form-style-10 label{
+	display: block;
+	font: 13px Arial, Helvetica, sans-serif;
+	color: #888;
+	margin-bottom: 15px;
+}
+.form-style-10 input[type="text"],
+.form-style-10 input[type="date"],
+.form-style-10 input[type="datetime"],
+.form-style-10 input[type="email"],
+.form-style-10 input[type="number"],
+.form-style-10 input[type="search"],
+.form-style-10 input[type="time"],
+.form-style-10 input[type="url"],
+.form-style-10 input[type="password"],
+.form-style-10 textarea,
+.form-style-10 select {
+	display: block;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	border-radius: 6px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border: 2px solid #fff;
+	box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+}
+
+.form-style-10 .section{
+	font: normal 20px 'Bitter', serif;
+	color: #2A88AD;
+	margin-bottom: 5px;
+}
+.form-style-10 .section span {
+	background: #2A88AD;
+	padding: 5px 10px 5px 10px;
+	position: absolute;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border: 4px solid #fff;
+	font-size: 14px;
+	margin-left: -45px;
+	color: #fff;
+	margin-top: -3px;
+}
+.form-style-10 input[type="button"],
+.form-style-10 input[type="submit"]{
+	background: #2A88AD;
+	padding: 8px 20px 8px 20px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	color: #fff;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+	font: normal 30px 'Bitter', serif;
+	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+	border: 1px solid #257C9E;
+	font-size: 15px;
+}
+.form-style-10 input[type="button"]:hover,
+.form-style-10 input[type="submit"]:hover{
+	background: #2A6881;
+	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+}
+.form-style-10 .privacy-policy{
+	float: right;
+	width: 250px;
+	font: 12px Arial, Helvetica, sans-serif;
+	color: #4D4D4D;
+	margin-top: 10px;
+	text-align: right;
+}
+
+div#content {
+    display: none;
+}
+
+div#loading {
+    top: 200 px;
+    margin: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 160px;
+    height: 24px;
+    background: url(loadingimage.gif) no-repeat;
+    cursor: wait;
+}
+.date {
+  background: rgba(179, 231, 255, 0.5);
+  /* width: 300px; */
+  /* height: 250px; */
+  border-radius: 10px;
+  /* text-align: center; */
+  /* line-height: 250px; */
+  color: black;
+  margin: 0 auto;
+}
+.apt {
+  background: rgba(100, 100, 100, 0.5);
+  /* width: 300px; */
+  /* height: 250px; */
+  border-radius: 10px;
+  /* text-align: center; */
+  /* line-height: 250px; */
+  color: black;
+  margin: 0 auto;
+}
+.contact {
+  border-style: solid;
+  border-color: rgba(30, 104, 135, 0.7) !important;
+  /* width: 300px; */
+  /* height: 250px; */
+  border-radius: 5px;
+  /* text-align: center; */
+  /* line-height: 250px; */
+  color: black;
+  margin: 0 auto;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background:  rgba(255, 255, 255, 0.9);
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
+<script type="text/javascript">// <![CDATA[
+        function preloader(){
+            document.getElementById("content").style.display = "none";
+            document.getElementById("loading").style.display = "block";
+        }//preloader
+        window.onload = preloader;
+  // ]]>
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<div class="form-style-10">
+<h1>Your Schedule<span>View your appointments scheduled by customers</span></h1>
+{% if data %}
+    {% for y in data %}
+        <div class="date"><h3>{{ y.id }}</h3>
+        {% if y.dates %}
+            <div class="container">
+            {% for t in y.dates %}
+                <div class="card">
+                    <div class="container">
+                    <h4>{{ t.time }}</h4>
+                    {% if t.appointments %}
+                        {% for a in t.appointments %}
+                            <div class="contact"><p>Name: {{ a.name }}</p>
+                            <p>Email: {{ a.email }}</p>
+                            <p>Phone: {{ a.phone }}</p></div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+        <br><br>
+    {% endfor %}
+{% endif %}
+<script>
+
+  function handlePlaceClick(idx) {
+      drop_menu = document.getElementById("places")
+              // select element
+      for(var i=0;i<drop_menu.options.length;i++){
+          if (drop_menu.options[i].index == idx) {
+              place = drop_menu.options[i].innerHTML
+              if (place === 'Select a place') {
+                return
+              }
+              window.location.href = '/handlePlace?place=' + place
+              break;
+          }
+      }
+  }
+
+  function handleTimeClick(idx) {
+    let drop_menu = document.getElementById("places")
+      for(var i=0;i<drop_menu.options.length;i++){
+          if (drop_menu.options[i].index == idx) {
+              console.log(drop_menu.options[i].innerHTML)
+              place = drop_menu.options[i].innerHTML
+              if (place === 'Select a time') {
+                  return
+              }
+              window.location.href = '/handleTime?place=' + data.place
+              break;
+          }
+      }
+  }
+
+</script>
+</body>
+</html>
