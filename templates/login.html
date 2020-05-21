@@ -159,7 +159,7 @@ div#loading {
 <body>
     <div class="form-style-10">
     <h1>Open Spot Admin<span>Enter your credentials to view your business' queue.</span></h1>
-    <form action="{{ url_for('handle_admin_creds') }}" method="post">
+    <form name="onboard-form" onsubmit="return validateForm()" action="{{ url_for('handle_admin_creds') }}" method="post">
         <!-- <div class="section"><\!--<span>{{ step_no }}</span>-\->Contact Details</div> -->
         <div class="inner-wrap">
             <label>Email <input name="email" type="email"></input></label>
@@ -173,5 +173,20 @@ div#loading {
         </div>
     </form>
     </div>
+<script>
+    function validateForm() {
+        console.log("???")
+        var password = document.forms["onboard-form"]["password"].value;
+        if (password === "") {
+            alert("Password must be filled out");
+            return false;
+        }
+        var email = document.forms["onboard-form"]["email"].value;
+        if (email === "") {
+            alert("Email must be filled out");
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

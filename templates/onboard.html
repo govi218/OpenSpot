@@ -159,8 +159,7 @@ div#loading {
 
 <div class="form-style-10">
 <h1>Get OpenSpot for your business!<span>Fill in the information below to onboard your business.</span></h1>
-<form action="{{ url_for('handle_onboard') }}" method="post">
-    <!-- <div class="section"><\!--<span>{{ step_no }}</span>-\->Contact Details</div> -->
+<form name="onboard-form" onsubmit="return validateForm()" action="{{ url_for('handle_onboard') }}" method="post">
     <div class="inner-wrap">
         <label>Name of Business <input type="text" name="businessName" /></label>
         <label>Pasword <input type="password" name="password" /></label>
@@ -181,37 +180,55 @@ div#loading {
 </form>
 </div>
 <script>
-
-  function handlePlaceClick(idx) {
-      drop_menu = document.getElementById("places")
-              // select element
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a place') {
-                return
-              }
-              window.location.href = '/handlePlace?place=' + place
-              break;
-          }
-      }
-  }
-
-  function handleTimeClick(idx) {
-    let drop_menu = document.getElementById("places")
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              console.log(drop_menu.options[i].innerHTML)
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a time') {
-                  return
-              }
-              window.location.href = '/handleTime?place=' + data.place
-              break;
-          }
-      }
-  }
-
+    function validateForm() {
+        console.log('??')
+        var businessName = document.forms["onboard-form"]["businessName"].value;
+        console.log(businessName)
+        if (businessName === "") {
+            alert("Business Name must be filled out");
+            return false;
+        }
+        var password = document.forms["onboard-form"]["fname"].value;
+        if (password === "") {
+            alert("Password must be filled out");
+            return false;
+        }
+        var email = document.forms["onboard-form"]["email"].value;
+        if (email === "") {
+            alert("Email must be filled out");
+            return false;
+        }
+        var number = document.forms["onboard-form"]["number"].value;
+        if (number === "") {
+            alert("Number must be filled out");
+            return false;
+        }
+        var time_per_person = document.forms["onboard-form"]["time_per_person"].value;
+        if (time_per_person === "") {
+            alert("Time Per Person must be filled out");
+            return false;
+        }
+        var max_people = document.forms["onboard-form"]["max_people"].value;
+        if (max_people === "") {
+            alert("Max People must be filled out");
+            return false;
+        }
+        var num_employees = document.forms["onboard-form"]["num_employees"].value;
+        if (num_employees === "") {
+            alert("Number of Employees must be filled out");
+            return false;
+        }
+        var openTime = document.forms["onboard-form"]["openTime"].value;
+        if (openTime === "") {
+            alert("Opening time must be filled out");
+            return false;
+        }
+        var closeTime = document.forms["onboard-form"]["closeTime"].value;
+        if (closeTime === "") {
+            alert("Closing time must be filled out");
+            return false;
+        }
+    }
 </script>
 </body>
 </html>
