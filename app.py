@@ -71,9 +71,13 @@ def onboard():
     print(places)
     return render_template("./onboard.html", places=places)
 
+@app.route("/", methods=['get'])
+def admin():
+    return render_template("./index.html")
+
 
 @app.route("/admin", methods=['get'])
-def admin():
+def index():
     return render_template("./login.html")
 
 
@@ -152,7 +156,7 @@ def handle_onboard():
         "time_per_person": int(time_per_person)
     })
 
-    return "Your response has been submitted!"
+    return "Your response has been submitted! Your business' unique link is: <a href=\"/form?place="+business_name+"\">https://open-spot.herokuapp.com/form?place="+business_name+"</a>. <br><br><br> You can check your reservations by going to the <a href=\"/admin\">admin page</a> and typing the password you just created."
 
 @app.route("/handle_admin_creds", methods=['get', 'post'])
 def handle_admin_creds():
