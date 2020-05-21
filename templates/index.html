@@ -128,9 +128,11 @@ body{
 	margin-top: 10px;
 	text-align: right;
 }
+
 div#content {
     display: none;
 }
+
 div#loading {
     top: 200 px;
     margin: auto;
@@ -141,48 +143,7 @@ div#loading {
     background: url(loadingimage.gif) no-repeat;
     cursor: wait;
 }
-.date {
-  background: rgba(179, 231, 255, 0.5);
-  /* width: 300px; */
-  /* height: 250px; */
-  border-radius: 10px;
-  /* text-align: center; */
-  /* line-height: 250px; */
-  color: black;
-  margin: 0 auto;
-}
-.apt {
-  background: rgba(100, 100, 100, 0.5);
-  /* width: 300px; */
-  /* height: 250px; */
-  border-radius: 10px;
-  /* text-align: center; */
-  /* line-height: 250px; */
-  color: black;
-  margin: 0 auto;
-}
-.contact {
-  border-style: solid;
-  border-color: rgba(30, 104, 135, 0.7) !important;
-  /* width: 300px; */
-  /* height: 250px; */
-  border-radius: 5px;
-  /* text-align: center; */
-  /* line-height: 250px; */
-  color: black;
-  margin: 0 auto;
-}
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  background:  rgba(255, 255, 255, 0.9);
-}
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-.container {
-  padding: 2px 16px;
-}
+
 </style>
 <script type="text/javascript">// <![CDATA[
         function preloader(){
@@ -198,64 +159,23 @@ div#loading {
 <body>
 
 <div class="form-style-10">
-<h1>Your Schedule<span>View your appointments scheduled by customers</span></h1>
-{% if data %}
-    {% for y in data %}
-        <div class="date"><h3>{{ y.id }}</h3>
-        {% if y.dates %}
-            <div class="container">
-            {% for t in y.dates %}
-                <div class="card">
-                    <div class="container">
-                    <h4>{{ t.time }}</h4>
-                    {% if t.appointments %}
-                        {% for a in t.appointments %}
-                            <div class="contact"><p>Name: {{ a.name }}</p>
-                            <p>Email: {{ a.email }}</p>
-                            <p>Phone: {{ a.phone }}</p></div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        {% endif %}
-        </div>
-        <br><br>
-    {% endfor %}
-{% endif %}
-<script>
+<h1>OpenSpot</h1>
+<div>
+  <div><a href="/onboard">Sign your business up</a> | <a href="/admin">Check your business' schedule</a></div>
+  <p> OpenSpot is an app that allows customers to make reservations for businesses. The business owner needs to fill
+    out our simple <a href="/onboard" target="_blank">onboarding form</a>, following which they will receive a unique
+    reservation form that they can post on social media for their customers. Business owners can view their
+    reservations in the <a href="/admin">admin dashboard</a>.</p>
 
-  function handlePlaceClick(idx) {
-      drop_menu = document.getElementById("places")
-              // select element
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a place') {
-                return
-              }
-              window.location.href = '/handlePlace?place=' + place
-              break;
-          }
-      }
-  }
+  <p>During the COVID-19 pandemic, a lot of businesses want to open up, but they don't want to have too many people
+  at a time, and don't want any queues. This app is aimed at solving this problem as business owners can set the
+    maximum amount of people they want in their store and the amount of time per person.
+    <br>
+    As a result, customers can simply book some time online and show up without having to queue! </p>
 
-  function handleTimeClick(idx) {
-    let drop_menu = document.getElementById("places")
-      for(var i=0;i<drop_menu.options.length;i++){
-          if (drop_menu.options[i].index == idx) {
-              console.log(drop_menu.options[i].innerHTML)
-              place = drop_menu.options[i].innerHTML
-              if (place === 'Select a time') {
-                  return
-              }
-              window.location.href = '/handleTime?place=' + data.place
-              break;
-          }
-      }
-  }
-
-</script>
+  <p> OpenSpot is Free and Open Source Software. For support inquiries, contact: <a href="mailto:open.spot2020@gmail.com">open.spot2020@gmail.com</a><p>
+  <p> OpenSpot data is stored on Google Cloud. OpenSpot source code is available at <a href="https://github.com/govi218/OpenSpot" target="_blank">Github</a>.</p>
+</div>
+</div>
 </body>
 </html>
