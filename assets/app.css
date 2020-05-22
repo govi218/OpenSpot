@@ -1,0 +1,35 @@
+.masthead {
+    height: 100vh;
+    min-height: 500px;
+    background:#AEE4FF
+}
+
+hr {
+    width: 30%;
+}
+
+.nav-item {
+    padding: 6px;
+}
+
+.navbar {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#onboard-form {
+    margin-top: 6em;
+    margin-bottom: 6em;
+}
+
+.form-group .form-control {
+    border-radius: 16px;
+}
+
+.jumbotron {
+    background-color: #AEE4FF;
+    text-align: center;
+}
+
+.center-name {
+    text-align: center;
+}

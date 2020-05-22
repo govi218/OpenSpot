@@ -1,234 +1,151 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Up To Ten</title>
-<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
-<style type="text/css">
-body{
-	background:#AEE4FF;
-}
-.form-style-10{
-	max-width:450px;
-	padding:30px;
-	margin:40px auto;
-	background: #FFF;
-	border-radius: 10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
-	-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
-	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
-}
-.form-style-10 .inner-wrap{
-	padding: 30px;
-	background: #F8F8F8;
-	border-radius: 6px;
-	margin-bottom: 15px;
-}
-.form-style-10 h1{
-	background: #2A88AD;
-	padding: 20px 30px 15px 30px;
-	margin: -30px -30px 30px -30px;
-	border-radius: 10px 10px 0 0;
-	-webkit-border-radius: 10px 10px 0 0;
-	-moz-border-radius: 10px 10px 0 0;
-	color: #fff;
-	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
-	font: normal 30px 'Bitter', serif;
-	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	border: 1px solid #257C9E;
-}
-.form-style-10 h1 > span{
-	display: block;
-	margin-top: 2px;
-	font: 13px Arial, Helvetica, sans-serif;
-}
-.form-style-10 label{
-	display: block;
-	font: 13px Arial, Helvetica, sans-serif;
-	color: #888;
-	margin-bottom: 15px;
-}
-.form-style-10 input[type="text"],
-.form-style-10 input[type="date"],
-.form-style-10 input[type="datetime"],
-.form-style-10 input[type="email"],
-.form-style-10 input[type="number"],
-.form-style-10 input[type="search"],
-.form-style-10 input[type="time"],
-.form-style-10 input[type="url"],
-.form-style-10 input[type="password"],
-.form-style-10 textarea,
-.form-style-10 select {
-	display: block;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	width: 100%;
-	padding: 8px;
-	border-radius: 6px;
-	-webkit-border-radius:6px;
-	-moz-border-radius:6px;
-	border: 2px solid #fff;
-	box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
-	-moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
-	-webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
-}
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Up To Ten</title>
+	<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assests/app.css">
 
-.form-style-10 .section{
-	font: normal 20px 'Bitter', serif;
-	color: #2A88AD;
-	margin-bottom: 5px;
-}
-.form-style-10 .section span {
-	background: #2A88AD;
-	padding: 5px 10px 5px 10px;
-	position: absolute;
-	border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border: 4px solid #fff;
-	font-size: 14px;
-	margin-left: -45px;
-	color: #fff;
-	margin-top: -3px;
-}
-.form-style-10 input[type="button"],
-.form-style-10 input[type="submit"]{
-	background: #2A88AD;
-	padding: 8px 20px 8px 20px;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	color: #fff;
-	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
-	font: normal 30px 'Bitter', serif;
-	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
-	border: 1px solid #257C9E;
-	font-size: 15px;
-}
-.form-style-10 input[type="button"]:hover,
-.form-style-10 input[type="submit"]:hover{
-	background: #2A6881;
-	-moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
-	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
-	box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
-}
-.form-style-10 .privacy-policy{
-	float: right;
-	width: 250px;
-	font: 12px Arial, Helvetica, sans-serif;
-	color: #4D4D4D;
-	margin-top: 10px;
-	text-align: right;
-}
-
-div#content {
-    display: none;
-}
-
-div#loading {
-    top: 200 px;
-    margin: auto;
-    position: absolute;
-    z-index: 1000;
-    width: 160px;
-    height: 24px;
-    background: url(loadingimage.gif) no-repeat;
-    cursor: wait;
-}
-
-</style>
-<script type="text/javascript">// <![CDATA[
-        function preloader(){
-            document.getElementById("content").style.display = "none";
-            document.getElementById("loading").style.display = "block";
-        }//preloader
-        window.onload = preloader;
+	<script type="text/javascript">// <![CDATA[
+		function preloader() {
+			document.getElementById("content").style.display = "none";
+			document.getElementById("loading").style.display = "block";
+		}//preloader
+		window.onload = preloader;
   // ]]>
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Get OpenSpot for your business!</h1>
+			<p class="lead">Fill in the information below to onboard your business.</p>
+		</div>
+	</div>
+	<div class="container">
+		<form id="onboard-form" name="onboard-form" onsubmit="return validateForm()"
+			action="{{ url_for('handle_onboard') }}" method="post">
+			<div class="form-group center-name">
+				<label for="">Business Name</label>
+				<input name="businessName" type="text" class="form-control" id="">
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="">Email</label>
+					<input name="email" class="form-control" type="email">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="">Password</label>
+					<input type="password" class="form-control" name="password" id="">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="">Phone Number</label>
+					<input name="number" type="text" class="form-control" id="">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label>Amount of Time Per Person (in minutes)</label>
+					<input class="form-control" type="number" name="time_per_person" />
+				</div>
+				<div class="form-group col-md-4">
+					<label>Max number of people at a given time</label>
+					<input class="form-control" type="number" name="max_people" />
+				</div>
+				<div class="form-group col-md-4">
+					<label>Number of Employees Working</label>
+					<input class="form-control" type="number" name="num_employees" />
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label>Opening Time</label>
+					<input class="form-control" type="time" name="openTime" />
+				</div>
+				<div class="form-group col-md-6">
+					<label>Closing Time</label>
+					<input class="form-control" type="time" name="closeTime" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-check">
+					<input name="field7" class="form-check-input" type="checkbox" id="gridCheck">
+					<label class="form-check-label" for="gridCheck">
+						You agree to our Terms and Policy
+					</label>
+				</div>
+			</div>
+			<div class="form-row">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</form>
+	</div>
 
-<div class="form-style-10">
-<h1>Get OpenSpot for your business!<span>Fill in the information below to onboard your business.</span></h1>
-<form name="onboard-form" onsubmit="return validateForm()" action="{{ url_for('handle_onboard') }}" method="post">
-    <div class="inner-wrap">
-        <label>Name of Business <input type="text" name="businessName" /></label>
-        <label>Pasword <input type="password" name="password" /></label>
-        <label>Email <input name="email" type="email"></input></label>
-        <label>Phone Number <input type="text" name="number" /></label>
-        <label>Amount of Time Per Person (in minutes)<input type="number" name="time_per_person" /></label>
-        <label>Max number of people at a given time (including employees) <input type="number" name="max_people" /></label>
-        <label>Number of Employees Working <input type="number" name="num_employees" /></label>
-        <label>Opening Time <input type="time" name="openTime"/></label>
-        <label>Closing Time <input type="time" name="closeTime"/></label>
-    </div>
-    <div class="button-section">
-     <input type="submit" name="Sign Up" />
-     <span class="privacy-policy">
-     <input type="checkbox" name="field7">You agree to our Terms and Policy.
-     </span>
-    </div>
-</form>
-</div>
-<script>
-    function validateForm() {
-        console.log('??')
-        var businessName = document.forms["onboard-form"]["businessName"].value;
-        console.log(businessName)
-        if (businessName === "") {
-            alert("Business Name must be filled out");
-            return false;
-        }
-        var password = document.forms["onboard-form"]["fname"].value;
-        if (password === "") {
-            alert("Password must be filled out");
-            return false;
-        }
-        var email = document.forms["onboard-form"]["email"].value;
-        if (email === "") {
-            alert("Email must be filled out");
-            return false;
-        }
-        var number = document.forms["onboard-form"]["number"].value;
-        if (number === "") {
-            alert("Number must be filled out");
-            return false;
-        }
-        var time_per_person = document.forms["onboard-form"]["time_per_person"].value;
-        if (time_per_person === "") {
-            alert("Time Per Person must be filled out");
-            return false;
-        }
-        var max_people = document.forms["onboard-form"]["max_people"].value;
-        if (max_people === "") {
-            alert("Max People must be filled out");
-            return false;
-        }
-        var num_employees = document.forms["onboard-form"]["num_employees"].value;
-        if (num_employees === "") {
-            alert("Number of Employees must be filled out");
-            return false;
-        }
-        var openTime = document.forms["onboard-form"]["openTime"].value;
-        if (openTime === "") {
-            alert("Opening time must be filled out");
-            return false;
-        }
-        var closeTime = document.forms["onboard-form"]["closeTime"].value;
-        if (closeTime === "") {
-            alert("Closing time must be filled out");
-            return false;
-        }
-    }
-</script>
+	<script>
+		function validateForm() {
+			console.log('??')
+			var businessName = document.forms["onboard-form"]["businessName"].value;
+			console.log(businessName)
+			if (businessName === "") {
+				alert("Business Name must be filled out");
+				return false;
+			}
+			var password = document.forms["onboard-form"]["fname"].value;
+			if (password === "") {
+				alert("Password must be filled out");
+				return false;
+			}
+			var email = document.forms["onboard-form"]["email"].value;
+			if (email === "") {
+				alert("Email must be filled out");
+				return false;
+			}
+			var number = document.forms["onboard-form"]["number"].value;
+			if (number === "") {
+				alert("Number must be filled out");
+				return false;
+			}
+			var time_per_person = document.forms["onboard-form"]["time_per_person"].value;
+			if (time_per_person === "") {
+				alert("Time Per Person must be filled out");
+				return false;
+			}
+			var max_people = document.forms["onboard-form"]["max_people"].value;
+			if (max_people === "") {
+				alert("Max People must be filled out");
+				return false;
+			}
+			var num_employees = document.forms["onboard-form"]["num_employees"].value;
+			if (num_employees === "") {
+				alert("Number of Employees must be filled out");
+				return false;
+			}
+			var openTime = document.forms["onboard-form"]["openTime"].value;
+			if (openTime === "") {
+				alert("Opening time must be filled out");
+				return false;
+			}
+			var closeTime = document.forms["onboard-form"]["closeTime"].value;
+			if (closeTime === "") {
+				alert("Closing time must be filled out");
+				return false;
+			}
+		}
+	</script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
 </body>
+
 </html>
